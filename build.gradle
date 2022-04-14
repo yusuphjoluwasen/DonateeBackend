@@ -1,16 +1,78 @@
 plugins {
+    id 'maven-publish'
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group = 'com.serverless'
+version = 'dev'
+
+description = """hello"""
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+jar {
+    manifest {
+        attributes(
+                "Manifest-Version": "1.0",
+                "Multi-Release": true
+        )
+    }
 }
+
+
+dependencies {
+    api(
+            'org.mindrot:jbcrypt:0.4',
+            'io.insert-koin:koin-core:3.1.4',
+            'io.insert-koin:koin-core-ext:3.0.2',
+            'io.insert-koin:koin-test:3.1.4',
+            'com.google.code.gson:gson:2.8.+',
+            'org.glassfish:javax.el:3.0.0',
+//            'org.simpleflatmapper:sfm-jdbc-jre9:8.2.3',
+            'org.hibernate:hibernate-validator:6.1.6.Final',
+            'org.springframework:spring-web:5.2.6.RELEASE',
+            'com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8',
+            'org.hibernate:hibernate-validator-annotation-processor:5.0.0.Alpha1',
+            'com.sendgrid:sendgrid-java:4.4.0',
+            'com.amazonaws:aws-lambda-java-core:1.2.1',
+            'com.amazonaws:aws-lambda-java-log4j2:1.2.0',
+            'org.apache.logging.log4j:log4j-api:2.13.3',
+            'org.slf4j:slf4j-simple:1.6.1',
+            'com.fasterxml.jackson.core:jackson-core:2.11.0',
+            'org.springframework:spring-jdbc:5.3.12',
+            'com.zaxxer:HikariCP:5.0.0',
+            'com.amazonaws:aws-java-sdk-s3:1.11.761',
+            'com.fasterxml.jackson.core:jackson-databind:2.11.0',
+            'com.fasterxml.jackson.core:jackson-annotations:2.11.0',
+            'io.jsonwebtoken:jjwt-api:0.11.2',
+            'io.insert-koin:koin-test:3.1.4',
+            'io.insert-koin:koin-test-junit4:3.1.4'
+    )
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+}
+
+task deploy(type: Exec, dependsOn: 'shadowJar') {
+    commandLine 'serverless', 'deploy'
+}
+
+shadowJar {
+    transform(com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer)
+}
+
+build.finalizedBy(shadowJar)
