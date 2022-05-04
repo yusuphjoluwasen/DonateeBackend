@@ -5,7 +5,7 @@ import com.serverless.repository.UserRepository
 
 class UserService(private val userRepository: UserRepository) {
 
-    fun addUser(user: User): User? {
+    fun addUser(user: User): Int? {
         return userRepository.addUser(user)
     }
 

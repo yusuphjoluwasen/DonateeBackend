@@ -9,6 +9,16 @@ class UserController(private val userService: UserService) {
     fun createUser(): BaseResponse {
         return BaseResponse("00", "success")
     }
+    fun updateUser():BaseResponse{
+        return BaseResponse("","")
+    }
 
+    fun findAllUsers(): BaseResponse{
+        return BaseResponse("","")
+    }
+
+    fun findUsersById(): BaseResponse{
+        return BaseResponse("","")
+    }
 
 }
