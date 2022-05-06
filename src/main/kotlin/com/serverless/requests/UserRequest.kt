@@ -21,7 +21,7 @@ data class CreateUserRequest(
 
 data class UpdateUserRequest(
     @get: NotEmpty(message = "id is required")
-    var id: String?,
+    var userid: String?,
     @get: NotEmpty(message = "email is required")
     var email: String?,
     @get: NotEmpty(message = "firstname is required")
@@ -41,5 +41,5 @@ data class UpdateUserRequest(
 
 data class FindUserRequest(
     @get: NotEmpty(message = "id is required")
-    var id: String?,
+    var userid: String?,
 )
