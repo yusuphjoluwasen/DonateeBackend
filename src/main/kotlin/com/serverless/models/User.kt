@@ -1,7 +1,7 @@
 package com.serverless.models
 
 data class User (
-    var id: String? = null,
+    var id: Int? = null,
     var firstname: String? = null,
     var lastname: String? = null,
     var email: String? = null,
@@ -11,6 +11,4 @@ data class User (
     var usertype: String? = null,
     var createdat: String? = null,
     var modifiedat: String? = null
-
-
 )
