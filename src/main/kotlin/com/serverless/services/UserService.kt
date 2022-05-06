@@ -6,9 +6,7 @@ import com.serverless.repository.UserRepository
 class UserService(private val userRepository: UserRepository) {
 
     fun addUser(user: User): Int? {
-//        return userRepository.add(user)
-        print("kkk")
-        return 0
+        return userRepository.addUser(user)
     }
 
     fun findUserById(id: String): User? {
@@ -19,5 +17,8 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findAllUsers()
     }
 
+    fun updateUser(user: User): Any? {
+        return userRepository.updateUser(user)
+    }
 
 }
