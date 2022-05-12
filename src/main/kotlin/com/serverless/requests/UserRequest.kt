@@ -11,16 +11,16 @@ data class CreateUserRequest(
     var lastname: String?,
     @get: NotEmpty(message = "mobilenumber is required")
     var mobilenumber: String?,
-    @get: NotEmpty(message = "Password is required")
+    @get: NotEmpty(message = "password is required")
     var password: String?,
-    @get: NotEmpty(message = "Address is required")
+    @get: NotEmpty(message = "address is required")
     var address: String?,
-    @get: NotEmpty(message = "UserType is required")
+    @get: NotEmpty(message = "usertype is required")
     var usertype: String?
     )
 
 data class UpdateUserRequest(
-    @get: NotEmpty(message = "id is required")
+    @get: NotEmpty(message = "userid is required")
     var userid: String?,
     @get: NotEmpty(message = "email is required")
     var email: String?,
@@ -30,11 +30,11 @@ data class UpdateUserRequest(
     var lastname: String?,
     @get: NotEmpty(message = "mobilenumber is required")
     var mobilenumber: String?,
-    @get: NotEmpty(message = "Password is required")
+    @get: NotEmpty(message = "password is required")
     var password: String?,
-    @get: NotEmpty(message = "Address is required")
+    @get: NotEmpty(message = "address is required")
     var address: String?,
-    @get: NotEmpty(message = "UserType is required")
+    @get: NotEmpty(message = "usertype is required")
     var usertype: String?
 )
 
@@ -42,4 +42,11 @@ data class UpdateUserRequest(
 data class FindUserRequest(
     @get: NotEmpty(message = "id is required")
     var userid: String?,
+)
+
+data class LoginRequest(
+    @get: NotEmpty(message = "password is required")
+    var password: String?,
+    @get: NotEmpty(message = "username is required")
+    var username: String?
 )

@@ -21,4 +21,8 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.updateUser(user)
     }
 
+    fun findUserByEmailOrByPhone(emailOrPhone: String) : User? {
+        return userRepository.findUserByEmailOrByPhone(emailOrPhone)
+    }
+
 }

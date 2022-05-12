@@ -1,6 +1,7 @@
 package com.serverless.controllers
 
 import com.serverless.exceptions.ItemNotFoundException
+import com.serverless.extensions.toHashedPassword
 import com.serverless.extensions.validate
 import com.serverless.models.User
 import com.serverless.requests.CreateUserRequest
@@ -15,14 +16,14 @@ class UserController(private val userService: UserService) {
 
     fun createUser(request: String): BaseResponse {
         val createUserRequest = request.validate<CreateUserRequest>()
-        val user = User(0,createUserRequest.firstname,createUserRequest.lastname,createUserRequest.email,createUserRequest.password,createUserRequest.address,createUserRequest.mobilenumber,createUserRequest.usertype)
+        val user = User(0,createUserRequest.firstname,createUserRequest.lastname,createUserRequest.email,createUserRequest.password.toHashedPassword(),createUserRequest.address,createUserRequest.mobilenumber,createUserRequest.usertype)
         userService.addUser(user)
         return BaseResponse("00", "created user sucessfully")
     }
 
     fun updateUser(request: String):BaseResponse{
         val createUserRequest = request.validate<UpdateUserRequest>()
-        val user = User(createUserRequest.userid?.toInt(),createUserRequest.firstname,createUserRequest.lastname,createUserRequest.email,createUserRequest.password,createUserRequest.address,createUserRequest.mobilenumber,createUserRequest.usertype)
+        val user = User(createUserRequest.userid?.toInt(),createUserRequest.firstname,createUserRequest.lastname,createUserRequest.email,createUserRequest.password.toHashedPassword(),createUserRequest.address,createUserRequest.mobilenumber,createUserRequest.usertype)
         userService.updateUser(user)
         return BaseResponse("00", "updated user sucessfully")
     }

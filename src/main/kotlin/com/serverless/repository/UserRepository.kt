@@ -13,6 +13,7 @@ interface UserRepository {
     fun updateUser(user: User): Any
     fun findAllUsers(): MutableList<User>
     fun findUserById(id: String): User?
+    fun findUserByEmailOrByPhone(emailOrPhone: String): User?
 }
 
 
@@ -24,6 +25,7 @@ class UserRepositoryImpl(private val dbUtil: DbUtil): UserRepository {
     private val FIND_ALL_USERS = "select * from dbo.users"
     private val FIND_USER_BY_ID = "select * from dbo.users WHERE id = :id"
     private val INSERT_INTO_USERS = "INSERT INTO dbo.users(firstname, lastname, email, password, address, mobilenumber, usertype) VALUES(:firstname, :lastname,  :email, :password, :address, :mobilenumber, :usertype);"
+    private val FIND_APPLICANT_BY_EMAIL_OR_PHONE  = "select * from users WHERE email = :email OR mobilenumber = :mobilenumber"
     //private val FIND_PROJECTS_BY_APPLICANT = "select * from dbo.projects where applicantid = :id"
     //private val DELETE_USER = "delete from dbo.users WHERE id = :id"
 
@@ -49,6 +51,12 @@ class UserRepositoryImpl(private val dbUtil: DbUtil): UserRepository {
         val params = mapOf("id" to id)
         val rowMapper  = BeanPropertyRowMapper.newInstance(User::class.java)
         return jdbcTemplate.queryForObject(FIND_USER_BY_ID, params, rowMapper)
+    }
+
+    override fun findUserByEmailOrByPhone(emailOrPhone: String): User? {
+        val params = mapOf("email" to emailOrPhone, "mobilenumber" to emailOrPhone)
+        val rowMapper  = BeanPropertyRowMapper.newInstance(User::class.java)
+        return jdbcTemplate.query(FIND_APPLICANT_BY_EMAIL_OR_PHONE, params, rowMapper).singleOrNull()
     }
 
 
